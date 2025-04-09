@@ -49,21 +49,21 @@ export default function Home() {
       );
     }
 
-    if (filters.brand) {
+    if (filters.brand && filters.brand != "select") {
       results = results.filter((car) => car.brand === filters.brand);
     }
 
-    if (filters.fuelType) {
+    if (filters.fuelType && filters.fuelType != "select") {
       results = results.filter((car) => car.fuelType === filters.fuelType);
     }
 
-    if (filters.seating) {
+    if (filters.seating && filters.seating != "select") {
       results = results.filter(
         (car) => car.seating === parseInt(filters.seating)
       );
     }
 
-    if (filters.priceRange) {
+    if (filters.priceRange && filters.priceRange != "select") {
       const [min, max] = filters.priceRange.split("-").map(Number);
       results = results.filter((car) => car.price >= min && car.price <= max);
     }

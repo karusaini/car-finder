@@ -60,7 +60,7 @@ export const Filters = ({ filters, onChange }: Props) => {
             <SelectValue placeholder="Select Brand" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Brands</SelectItem>
+            <SelectItem value="select">All Brands</SelectItem>
             <SelectItem value="Maruti">Maruti</SelectItem>
             <SelectItem value="Hyundai">Hyundai</SelectItem>
             <SelectItem value="Toyota">Toyota</SelectItem>
@@ -84,7 +84,7 @@ export const Filters = ({ filters, onChange }: Props) => {
             <SelectValue placeholder="Select Fuel Type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Types</SelectItem>
+            <SelectItem value="select">All Types</SelectItem>
             <SelectItem value="Petrol">Petrol</SelectItem>
             <SelectItem value="Diesel">Diesel</SelectItem>
             <SelectItem value="Electric">Electric</SelectItem>
@@ -104,7 +104,7 @@ export const Filters = ({ filters, onChange }: Props) => {
             <SelectValue placeholder="Seating Capacity" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="any">Any</SelectItem>
+            <SelectItem value="select">Any</SelectItem>
             <SelectItem value="5">5 Seater</SelectItem>
             <SelectItem value="7">7 Seater</SelectItem>
             <SelectItem value="4">4 Seater</SelectItem>
@@ -123,7 +123,7 @@ export const Filters = ({ filters, onChange }: Props) => {
             <SelectValue placeholder="Price Range" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All</SelectItem>
+            <SelectItem value="select">All</SelectItem>
             <SelectItem value="0-500000">Below ₹5L</SelectItem>
             <SelectItem value="500000-1000000">₹5L - ₹10L</SelectItem>
             <SelectItem value="1000000-2000000">₹10L - ₹20L</SelectItem>
