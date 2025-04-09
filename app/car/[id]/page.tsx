@@ -4,14 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-export default async function CarDetailsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  // 🛠️ Correctly awaitable dynamic route param usage
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default function CarDetailsPage({ params }: PageProps) {
+  // 🛠️ Correctly handle dynamic route param
   const car = sampleCars.find((car) => car.id === Number(params.id));
 
+  // Return 404 page if car is not found
   if (!car) return notFound();
 
   return (
