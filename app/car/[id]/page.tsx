@@ -4,14 +4,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-export default function CarDetailsPage({ params }: { params: { id: string } }) {
+export default async function CarDetailsPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  // 🛠️ Correctly awaitable dynamic route param usage
   const car = sampleCars.find((car) => car.id === Number(params.id));
 
   if (!car) return notFound();
 
   return (
     <div className="min-h-screen p-4 md:p-6 bg-gray-100 dark:bg-black text-black dark:text-white">
-      {/* Back Button - aligned right */}
+      {/* Back Button */}
       <div className="flex justify-end mb-6">
         <Link href="/">
           <button className="flex items-center gap-2 bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-md transition">
@@ -21,7 +26,7 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
         </Link>
       </div>
 
-      {/* Main Content */}
+      {/* Main Car Detail Card */}
       <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-4 md:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Car Image */}
         <div>
@@ -34,7 +39,7 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
           />
         </div>
 
-        {/* Car Info */}
+        {/* Car Info Section */}
         <div className="flex flex-col justify-center space-y-4">
           <h1 className="text-3xl md:text-4xl font-bold">{car.name}</h1>
 
