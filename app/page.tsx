@@ -1,122 +1,65 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { CarCard } from "@/components/CarCard";
-import { sampleCars } from "@/data/cars";
-import { Filters, FiltersType } from "@/components/Filters";
-import Link from "next/link";
-import { Heart } from "lucide-react";
+import { useState } from "react";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
-export default function Home() {
-  const [cars] = useState(sampleCars);
-  const [filteredCars, setFilteredCars] = useState(sampleCars);
-  const [filters, setFilters] = useState<FiltersType>({
-    search: "",
-    brand: "",
-    fuelType: "",
-    seating: "",
-    priceRange: "",
-  });
+export default function ThemeToggle() {
+  const [isOpen, setIsOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const carsPerPage = 10;
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
-  useEffect(() => {
-    let results = [...cars];
-
-    if (filters.search) {
-      results = results.filter((car) =>
-        car.name.toLowerCase().includes(filters.search.toLowerCase())
-      );
-    }
-
-    if (filters.brand) {
-      results = results.filter((car) => car.brand === filters.brand);
-    }
-
-    if (filters.fuelType) {
-      results = results.filter((car) => car.fuelType === filters.fuelType);
-    }
-
-    if (filters.seating) {
-      results = results.filter(
-        (car) => car.seating === parseInt(filters.seating)
-      );
-    }
-
-    if (filters.priceRange) {
-      const [min, max] = filters.priceRange.split("-").map(Number);
-      results = results.filter((car) => car.price >= min && car.price <= max);
-    }
-
-    setFilteredCars(results);
-    setCurrentPage(1);
-  }, [filters, cars]);
-
-  const indexOfLastCar = currentPage * carsPerPage;
-  const indexOfFirstCar = indexOfLastCar - carsPerPage;
-  const currentCars = filteredCars.slice(indexOfFirstCar, indexOfLastCar);
-  const totalPages = Math.ceil(filteredCars.length / carsPerPage);
-
-  const handlePageChange = (direction: "prev" | "next") => {
-    if (direction === "prev" && currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    } else if (direction === "next" && currentPage < totalPages) {
-      setCurrentPage((prev) => prev + 1);
-    }
+  const handleSelectTheme = (themeOption: string) => {
+    setTheme(themeOption);
+    setIsOpen(false);
   };
 
   return (
-    <main className="min-h-screen p-6 bg-gray-100 dark:bg-black relative">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Car Finder</h1>
+    <div className="relative inline-block">
+      <button
+        onClick={toggleDropdown}
+        className="flex items-center gap-2 bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition cursor-pointer"
+      >
+        {/* Button Text for Light/Dark Toggle */}
+        {theme === "dark" ? (
+          <>
+            <Moon className="w-5 h-5" />
+            Dark Mode
+          </>
+        ) : (
+          <>
+            <Sun className="w-5 h-5" />
+            Light Mode
+          </>
+        )}
+      </button>
 
-        {/* Desktop Wishlist Button */}
-        <Link href="/wishlist" className="hidden md:inline-block">
-          <button className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
-            <Heart className="w-5 h-5" /> Wishlist
-          </button>
-        </Link>
-      </div>
-
-      {/* Filters */}
-      <Filters filters={filters} onChange={setFilters} />
-
-      {/* Car Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {currentCars.map((car) => (
-          <CarCard key={car.id} car={car} />
-        ))}
-      </div>
-
-      {/* Pagination */}
-      <div className="flex justify-center items-center gap-4 mt-6">
-        <button
-          className="px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded disabled:opacity-50"
-          onClick={() => handlePageChange("prev")}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span className="text-sm text-gray-700 dark:text-gray-300">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          className="px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded disabled:opacity-50"
-          onClick={() => handlePageChange("next")}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>
-
-      {/* Mobile Floating Wishlist Button */}
-      <Link href="/wishlist" className="md:hidden">
-        <button className="fixed bottom-6 right-6 bg-red-500 text-white p-4 rounded-full shadow-lg hover:bg-red-600 transition z-50">
-          <Heart className="w-6 h-6" />
-        </button>
-      </Link>
-    </main>
+      {/* Dropdown for System, Light, Dark Options */}
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md shadow-lg z-10">
+          <div
+            className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+            onClick={() => handleSelectTheme("system")}
+          >
+            System Default
+          </div>
+          <div
+            className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+            onClick={() => handleSelectTheme("light")}
+          >
+            Light Mode
+          </div>
+          <div
+            className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+            onClick={() => handleSelectTheme("dark")}
+          >
+            Dark Mode
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

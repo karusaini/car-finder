@@ -4,22 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function CarDetailsPage({ params }: PageProps) {
-  // 🛠️ Correctly handle dynamic route param
-  const car = sampleCars.find((car) => car.id === Number(params.id));
+export default async function CarDetailsPage({ params }: { params: any }) {
+  const { id } = await params;
+  const car = sampleCars.find((car) => car.id === Number(id));
 
   // Return 404 page if car is not found
-  if (!car) return notFound();
+  if (!car) {
+    notFound();
+  }
 
   return (
     <div className="min-h-screen p-4 md:p-6 bg-gray-100 dark:bg-black text-black dark:text-white">
-      {/* Back Button */}
       <div className="flex justify-end mb-6">
         <Link href="/">
           <button className="flex items-center gap-2 bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-md transition">
@@ -29,7 +24,6 @@ export default function CarDetailsPage({ params }: PageProps) {
         </Link>
       </div>
 
-      {/* Main Car Detail Card */}
       <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-4 md:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Car Image */}
         <div>
