@@ -5,8 +5,7 @@ import { CarCard } from "@/components/CarCard";
 import { sampleCars } from "@/data/cars";
 import { Filters, FiltersType } from "@/components/Filters";
 import Link from "next/link";
-import { Heart } from "lucide-react";
-import { Moon, Sun, Laptop } from "lucide-react"; // Using icons for light, dark, and system
+import { Heart, Moon, Sun, Laptop } from "lucide-react";
 
 export default function Home() {
   const [cars] = useState(sampleCars);
@@ -19,14 +18,14 @@ export default function Home() {
     priceRange: "",
   });
 
+  const [sortOption, setSortOption] = useState("default");
+
   const [currentPage, setCurrentPage] = useState(1);
   const carsPerPage = 10;
 
-  // Dark mode state
   const [mode, setMode] = useState<"light" | "dark" | "system">("system");
   const [isDark, setIsDark] = useState(false);
 
-  // Effect to set the theme according to the mode selected
   useEffect(() => {
     if (mode === "system") {
       const systemPreference = window.matchMedia(
@@ -49,28 +48,35 @@ export default function Home() {
       );
     }
 
-    if (filters.brand && filters.brand != "select") {
+    if (filters.brand && filters.brand !== "select") {
       results = results.filter((car) => car.brand === filters.brand);
     }
 
-    if (filters.fuelType && filters.fuelType != "select") {
+    if (filters.fuelType && filters.fuelType !== "select") {
       results = results.filter((car) => car.fuelType === filters.fuelType);
     }
 
-    if (filters.seating && filters.seating != "select") {
+    if (filters.seating && filters.seating !== "select") {
       results = results.filter(
         (car) => car.seating === parseInt(filters.seating)
       );
     }
 
-    if (filters.priceRange && filters.priceRange != "select") {
+    if (filters.priceRange && filters.priceRange !== "select") {
       const [min, max] = filters.priceRange.split("-").map(Number);
       results = results.filter((car) => car.price >= min && car.price <= max);
     }
 
+    // Sorting logic
+    if (sortOption === "lowToHigh") {
+      results.sort((a, b) => a.price - b.price);
+    } else if (sortOption === "highToLow") {
+      results.sort((a, b) => b.price - a.price);
+    }
+
     setFilteredCars(results);
     setCurrentPage(1);
-  }, [filters, cars]);
+  }, [filters, cars, sortOption]);
 
   const indexOfLastCar = currentPage * carsPerPage;
   const indexOfFirstCar = indexOfLastCar - carsPerPage;
@@ -115,7 +121,6 @@ export default function Home() {
               )
             }
           >
-            {/* Knob */}
             <div
               className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow transition-transform duration-300 ${
                 mode === "dark"
@@ -126,7 +131,6 @@ export default function Home() {
               }`}
             />
 
-            {/* Icons */}
             <div className="absolute inset-0 flex items-center justify-between px-2 text-white">
               <Sun
                 className={`${
@@ -150,6 +154,19 @@ export default function Home() {
 
       {/* Filters */}
       <Filters filters={filters} onChange={setFilters} />
+
+      {/* Sorting Dropdown */}
+      <div className="flex justify-end mb-4">
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="px-4 py-2 border rounded-md bg-white text-black dark:bg-gray-800 dark:text-white"
+        >
+          <option value="default">Sort by</option>
+          <option value="lowToHigh">Price: Low to High</option>
+          <option value="highToLow">Price: High to Low</option>
+        </select>
+      </div>
 
       {/* Car Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
