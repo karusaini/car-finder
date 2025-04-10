@@ -7,7 +7,7 @@ export const sampleCars = [
       fuelType: "Petrol",
       seating: 5,
       image: "https://imgd.aeplcdn.com/370x208/n/cw/ec/45951/amaze-exterior-right-front-three-quarter-3.jpeg",
-
+      
     },
     {
       id: 2,
