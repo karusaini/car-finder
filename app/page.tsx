@@ -93,7 +93,7 @@ export default function Home() {
           Car Finder
         </h1>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 cursor-poi">
           {/* Wishlist Button */}
           <Link href="/wishlist" className="hidden md:inline-block">
             <div className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition cursor-pointer">

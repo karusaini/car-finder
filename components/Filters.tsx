@@ -16,6 +16,7 @@ export interface FiltersType {
   fuelType: string;
   seating: string;
   priceRange: string;
+  sortBy?: "lowToHigh" | "highToLow" | "";
 }
 
 interface Props {
@@ -40,23 +41,21 @@ export const Filters = ({ filters, onChange }: Props) => {
 
   return (
     <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-8">
-      {/* Search Field */}
       <div>
         <Input
           placeholder="Search by car name..."
           value={filters.search}
           onChange={(e) => handleChange("search", e.target.value)}
-          className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:bg-gray-800"
+          className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-gray-500 dark:bg-gray-800 transition-all duration-300 ease-in-out hover:shadow-md"
         />
       </div>
 
-      {/* Brand Select */}
       <div>
         <Select
           value={filters.brand}
           onValueChange={(val) => handleChange("brand", val)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full rounded-lg transition-all duration-300 ease-in-out hover:shadow-md focus:ring-2 focus:ring-gray-500">
             <SelectValue placeholder="Select Brand" />
           </SelectTrigger>
           <SelectContent>
@@ -80,7 +79,7 @@ export const Filters = ({ filters, onChange }: Props) => {
           value={filters.fuelType}
           onValueChange={(val) => handleChange("fuelType", val)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full rounded-lg transition-all duration-300 ease-in-out hover:shadow-md focus:ring-2 focus:ring-gray-500">
             <SelectValue placeholder="Select Fuel Type" />
           </SelectTrigger>
           <SelectContent>
@@ -100,7 +99,7 @@ export const Filters = ({ filters, onChange }: Props) => {
           value={filters.seating}
           onValueChange={(val) => handleChange("seating", val)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full rounded-lg transition-all duration-300 ease-in-out hover:shadow-md focus:ring-2 focus:ring-gray-500">
             <SelectValue placeholder="Seating Capacity" />
           </SelectTrigger>
           <SelectContent>
@@ -119,7 +118,7 @@ export const Filters = ({ filters, onChange }: Props) => {
           value={filters.priceRange}
           onValueChange={(val) => handleChange("priceRange", val)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full rounded-lg transition-all duration-300 ease-in-out hover:shadow-md focus:ring-2 focus:ring-gray-500">
             <SelectValue placeholder="Price Range" />
           </SelectTrigger>
           <SelectContent>
@@ -138,7 +137,7 @@ export const Filters = ({ filters, onChange }: Props) => {
       <div className="col-span-full flex justify-center mt-6">
         <button
           onClick={handleClearFilters}
-          className="text-sm bg-gray-300 dark:bg-gray-700 text-black dark:text-white px-4 py-2 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-600 transition duration-300"
+          className="text-sm bg-gray-300 dark:bg-gray-700 text-black dark:text-white px-4 py-2 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-600 transition duration-300 ease-in-out shadow:scale-105 hover:shadow-md cursor-pointer"
         >
           Clear Filters
         </button>
