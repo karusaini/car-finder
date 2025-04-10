@@ -19,7 +19,7 @@ export default async function CarDetailsPage({ params }: { params: any }) {
         <Link href="/">
           <button className="flex items-center gap-2 bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-md transition">
             <ArrowLeft className="w-4 h-4" />
-            Back to Home
+            Home
           </button>
         </Link>
       </div>

@@ -43,7 +43,7 @@ export const CarCard = ({ car }: CarCardProps) => {
   };
 
   return (
-    <div className="relative bg-white dark:bg-gray-900 p-4 rounded-xl shadow-sm border hover:shadow-md transition-all flex flex-col items-center text-center">
+    <div className="relative bg-white dark:bg-gray-900 p-4 rounded-xl shadow-sm border hover:shadow-md transition-all flex flex-col">
       {/* Wishlist Heart Icon */}
       <button
         onClick={toggleWishlist}
@@ -68,18 +68,30 @@ export const CarCard = ({ car }: CarCardProps) => {
         className="rounded-xl object-cover w-full h-48 shadow-md hover:scale-105 transition-transform duration-300"
       />
 
-      {/* Car Info */}
-      <h2 className="text-lg font-bold mt-4">{car.name}</h2>
-      <p className="text-sm text-muted-foreground">Brand: {car.brand}</p>
-      <p className="text-sm text-muted-foreground">Fuel: {car.fuelType}</p>
-      <p className="text-sm text-muted-foreground">Seating: {car.seating}</p>
-      <p className="text-sm text-muted-foreground mb-3">
-        ₹{car.price.toLocaleString()}
-      </p>
+      {/* Car Name and Price */}
+      <div className="flex justify-between items-center mt-4">
+        <h2 className="text-lg font-bold">{car.name}</h2>
+        <p className="text-base font-semibold text-green-600 dark:text-green-400">
+          ₹{car.price.toLocaleString()}
+        </p>
+      </div>
 
-      {/* View Details */}
+      {/* Car Info in Flex Layout */}
+      <div className="flex justify-between text-sm text-muted-foreground mt-2">
+        <p>
+          <span className="font-medium">Brand:</span> {car.brand}
+        </p>
+        <p>
+          <span className="font-medium">Fuel:</span> {car.fuelType}
+        </p>
+        <p>
+          <span className="font-medium">Seats:</span> {car.seating}
+        </p>
+      </div>
+
+      {/* View Details Button */}
       <Button
-        className="cursor-pointer"
+        className="mt-4"
         onClick={() => router.push(`/car/${car.id}`)}
         variant="outline"
       >
